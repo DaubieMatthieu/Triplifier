@@ -1,0 +1,27 @@
+html, body {
+    height: 100%;
+    margin: 0;
+    font-family: Roboto, serif;
+}
+
+#container {
+    display: flex;
+    flex-flow: column;
+    height: 100%;
+}
+
+label {
+    display: block;
+    margin: 5px;
+}
+
+.preview {
+    flex-grow: 1;
+    display: flex;
+    overflow: auto;
+}
+
+.preview > * {
+    overflow-y: scroll;
+    width: 50%;
+}
