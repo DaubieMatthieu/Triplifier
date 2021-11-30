@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/Triplificator.iml" filepath="$PROJECT_DIR$/.idea/Triplificator.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/Triplifier.iml" filepath="$PROJECT_DIR$/.idea/Triplifier.iml" />
     </modules>
   </component>
 </project>
