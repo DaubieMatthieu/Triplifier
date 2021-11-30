@@ -12,6 +12,7 @@ config.read('defaults.ini')
 
 
 # TODO improve UI
+# TODO add README & comments
 
 @app.route('/', methods=["GET", "POST"])
 def index():
