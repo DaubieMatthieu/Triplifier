@@ -1,4 +1,5 @@
 import configparser
+import sys
 from os.path import splitext
 
 from flask import Flask, render_template, request
@@ -8,7 +9,7 @@ import utils
 app = Flask(__name__)
 
 # loading the defaults.ini configuration file
-config = configparser.SafeConfigParser()
+config = configparser.ConfigParser()
 config.read('defaults.ini')
 
 
@@ -77,4 +78,6 @@ def index():
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    from waitress import serve
+    print('Launching application on http://localhost:8080/', file=sys.stdout)
+    serve(app, host="0.0.0.0", port=8080)
