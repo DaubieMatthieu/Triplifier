@@ -2,6 +2,7 @@ html, body {
     height: 100%;
     margin: 0;
     font-family: Roboto, serif;
+    padding: 0 2px;
 }
 
 #container {
@@ -10,18 +11,61 @@ html, body {
     height: 100%;
 }
 
+h1 {
+    text-align: center;
+    color: #38761d;
+}
+
+#parameters-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+}
+
+#right-block {
+    grid-column: 1 / 2;
+    grid-row: 1;
+    text-align: left;
+}
+
+#left-block {
+    grid-column: 2 / 3;
+    grid-row: 1;
+    text-align: right;
+}
+
 label {
     display: block;
     margin: 5px;
+    font-weight: bold;
 }
 
-.preview {
+#button-wrapper {
+    display: flex;
+    justify-content: center;
+}
+
+button {
+    background-color: #38761d;
+    padding: 10px 20px;
+    color: white;
+    border: none;
+    border-radius: 10px;
+
+}
+
+#previews {
+    padding-top: 20px;
     flex-grow: 1;
     display: flex;
     overflow: auto;
 }
 
-.preview > * {
+#previews > * {
     overflow-y: scroll;
     width: 50%;
+}
+
+pre {
+    font-family: Roboto, serif;
 }

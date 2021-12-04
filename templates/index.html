@@ -7,54 +7,64 @@
 </head>
 <body>
 <div id="container">
+    <h1>Welcome to the Triplifier</h1>
     <form action="/" method="post">
-        <label>
-            Title line number (put 0 if no title line)
-            <input type="number" name="title_line_number" value="{{ title_line_number }}">
-        </label>
-        <label>
-            Data first line number
-            <input type="number" name="data_first_line_number" value="{{ data_first_line_number }}">
-        </label>
-        <label>
-            Data last line number
-            <input type="number" name="data_last_line_number" value="{{ data_last_line_number }}">
-        </label>
-        <label>
-            Separator
-            <input type="text" name="separator" value="{{ separator }}">
-        </label>
-        <label>
-            Data prefix (d)
-            <input type="text" name="data_prefix" value="{{ data_prefix }}">
-        </label>
-        <label>
-            Predicate prefix (p)
-            <input type="text" name="predicate_prefix" value="{{ predicate_prefix }}">
-        </label>
-        <label>
-            Input file (csv format)
-            <select name="input_file" required>
-                {% for o in input_files %}
-                    <option value="{{ o }}" {% if o==selected_input_file %} selected {% endif %}>{{ o }}</option>
-                {% endfor %}
-            </select>
-        </label>
-        <label>
-            Output file (ttl format)
-            <select name="output_file" required>
-                {% for o in output_files %}
-                    <option value="{{ o }}" {% if o==selected_output_file %} selected {% endif %}>{{ o }}</option>
-                {% endfor %}
-            </select>
-        </label>
-
-        <button name="triplify_button">
-            Triplify !
-        </button>
+        <div id="parameters-container">
+            <div id="right-block">
+                <label>
+                    Title line number (put 0 if no title line)
+                    <input type="number" name="title_line_number" value="{{ title_line_number }}">
+                </label>
+                <label>
+                    Data first line number
+                    <input type="number" name="data_first_line_number" value="{{ data_first_line_number }}">
+                </label>
+                <label>
+                    Data last line number
+                    <input type="number" name="data_last_line_number" value="{{ data_last_line_number }}">
+                </label>
+                <label>
+                    Separator
+                    <input type="text" name="separator" value="{{ separator }}">
+                </label>
+            </div>
+            <div id="left-block">
+                <label>
+                    Data prefix (d)
+                    <input type="text" name="data_prefix" value="{{ data_prefix }}">
+                </label>
+                <label>
+                    Predicate prefix (p)
+                    <input type="text" name="predicate_prefix" value="{{ predicate_prefix }}">
+                </label>
+                <label>
+                    Input file (csv format)
+                    <select name="input_file" required>
+                        {% for o in input_files %}
+                            <option value="{{ o }}" {% if o==selected_input_file %}
+                                    selected {% endif %}>{{ o }}</option>
+                        {% endfor %}
+                    </select>
+                </label>
+                <label>
+                    Output file (ttl format)
+                    <select name="output_file" required>
+                        {% for o in output_files %}
+                            <option value="{{ o }}" {% if o==selected_output_file %}
+                                    selected {% endif %}>{{ o }}</option>
+                        {% endfor %}
+                    </select>
+                </label>
+            </div>
+        </div>
+        <div id="button-wrapper">
+            <button name="triplify_button">
+                Triplify !
+            </button>
+        </div>
     </form>
 
-    <div class="preview">
+    <div id="previews">
         <div>
             <label>Input file preview ({{ selected_input_file }})</label>
             <pre>{{ input_file_content }}</pre>
