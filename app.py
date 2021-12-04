@@ -12,17 +12,10 @@ config = configparser.SafeConfigParser()
 config.read('defaults.ini')
 
 
-# TODO improve UI, specify in README if using a framework (Bootstrap)
-# TODO add README & comments
-
 # This is the main and only endpoint of the app
 # It can be called with GET or POST methods, depending on the intention
 @app.route('/', methods=["GET", "POST"])
 def index():
-    # fetching the existing files from the "/files" directory
-    input_files, output_files = utils.get_available_files()
-    # If selected, this option will automatically create or select a file with the same name as the input file
-    output_files.append("Automatic")
     if request.method == "GET":
         # Used when calling the app without parameters (ie first load), the defaults parameters are therefore used:
         # Fetching the defaults parameters from the "defaults.ini" config file
@@ -34,8 +27,8 @@ def index():
         predicate_prefix = config.get("DEFAULT", "prefix_predicate")
         input_file = None  # will select first one of the list by default
         output_file = "Automatic"  # will select "Automatic" by default
-        input_file_content = "Launch triplifier to see preview"
-        output_file_content = "Launch triplifier to see preview"
+        input_file_content, output_file_content = "", ""  # not loaded before launching triplifier
+        success, message = False, "Launch the Triplifier to see previews"
     else:
         # Used when calling the app with parameters (ie to triplify)
         # Fetching the parameters from the form contained in the POST request
@@ -55,12 +48,17 @@ def index():
         # Triplifying and fetching result
         success, message = utils.triplify(title_line_number, data_first_line_number, data_last_line_number, separator,
                                           data_prefix, predicate_prefix, input_file, output_file)
+
         # loading files contents for preview
         input_file_content = utils.get_file_content(input_file)
         output_file_content = utils.get_file_content(output_file)
-        print(str(success) + message)  # TODO print in UI as a toast
 
-    # returning the page html code
+    # fetching the existing files from the "/files" directory
+    input_files, output_files = utils.get_available_files()
+    # If selected, this option will automatically create or select a file with the same name as the input file
+    output_files.insert(0, "Automatic")  # put in first position so it is selected by default
+
+    # compute and return the page html code
     return render_template('index.html',
                            title_line_number=title_line_number,
                            data_first_line_number=data_first_line_number,
@@ -73,9 +71,10 @@ def index():
                            selected_input_file=input_file,
                            selected_output_file=output_file,
                            input_file_content=input_file_content,
-                           output_file_content=output_file_content)
+                           output_file_content=output_file_content,
+                           success=success,
+                           message=message)
 
 
 if __name__ == '__main__':
-    # TODO remove debug mode
     app.run(debug=True)

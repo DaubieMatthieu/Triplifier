@@ -12,8 +12,15 @@ def get_available_files():
 
 
 def get_file_content(file_name):
-    with open("files/" + file_name, "r") as file:
-        return file.read()
+    try:
+        with open("files/" + file_name, "r") as file:
+            # get content as a list of lines (by splitting on line separators)
+            content = file.read().split("\n")
+            # return content as a string, by rejoining the lines (with line separators)
+            # but with line number at beginning of each line (for better display)
+            return '\n'.join(["{:02d}    {}".format(i+1, content[i]) for i in range(len(content))])
+    except FileNotFoundError:
+        return "Could not load file '{}'".format(file_name)
 
 
 def triplify(title_line_number, data_first_line_number, data_last_line_number, separator,
@@ -94,7 +101,7 @@ def generate_output_file(title_line, data, output_file, data_prefix, predicate_p
             if not check_float(obj):  # if value is a float, we consider it does not refer an existing object
                 obj = "d:" + obj.replace(" ", "_")  # Make value url friendly
             if title_line:  # if there is a title line, we use the column name for the predicate
-                predicate = "has{}".format(title_line[j])
+                predicate = "has{}".format(title_line[j].replace(" ", "_").capitalize())
             else:  # else we use a generic predicate
                 predicate = "hasAttribute"
             attribute = attribute_format.format(predicate=predicate, object=obj)
@@ -104,8 +111,8 @@ def generate_output_file(title_line, data, output_file, data_prefix, predicate_p
 
     with open(output_file, "w") as ttl_file:
         # Adding the two prefixes, separated by a newline and an additional newline before triplets
-        ttl_file.write("@prefix d: " + data_prefix + " .\n")
-        ttl_file.write("@prefix p: " + predicate_prefix + " .\n\n")
+        ttl_file.write("@prefix d: <{}> .\n".format(data_prefix))
+        ttl_file.write("@prefix p: <{}> .\n\n".format(predicate_prefix))
         # Triplets are separated by a "." (syntax) and a newline (display)
         ttl_file.writelines([str(line) + " .\n" for line in triplets])
 

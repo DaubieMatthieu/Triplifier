@@ -30,11 +30,11 @@
             </div>
             <div id="left-block">
                 <label>
-                    Data prefix (d)
+                    Data prefix url (d)
                     <input type="text" name="data_prefix" value="{{ data_prefix }}">
                 </label>
                 <label>
-                    Predicate prefix (p)
+                    Predicate prefix url (p)
                     <input type="text" name="predicate_prefix" value="{{ predicate_prefix }}">
                 </label>
                 <label>
@@ -63,6 +63,7 @@
             </button>
         </div>
     </form>
+    <p id="message" style="color: {{ 'green' if success else 'red' }}">{{ message }}</p>
 
     <div id="previews">
         <div>

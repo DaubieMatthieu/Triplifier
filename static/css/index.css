@@ -48,10 +48,14 @@ label {
 button {
     background-color: #38761d;
     padding: 10px 20px;
+    margin: 5px 0;
     color: white;
     border: none;
     border-radius: 10px;
+}
 
+#message {
+    text-align: center;
 }
 
 #previews {
