@@ -1,3 +1,4 @@
+import codecs
 import csv
 from os import listdir
 from os.path import isfile, join
@@ -13,12 +14,12 @@ def get_available_files():
 
 def get_file_content(file_name):
     try:
-        with open("files/" + file_name, "r") as file:
+        with codecs.open("files/" + file_name, "r", encoding="utf8") as file:
             # get content as a list of lines (by splitting on line separators)
             content = file.read().split("\n")
             # return content as a string, by rejoining the lines (with line separators)
             # but with line number at beginning of each line (for better display)
-            return '\n'.join(["{:02d}    {}".format(i+1, content[i]) for i in range(len(content))])
+            return '\n'.join(["{:02d}    {}".format(i + 1, content[i]) for i in range(len(content))])
     except FileNotFoundError:
         return "Could not load file '{}'".format(file_name)
 
@@ -30,7 +31,7 @@ def triplify(title_line_number, data_first_line_number, data_last_line_number, s
     output_file = "files/" + output_file
     if not isfile(input_file):  # Checking input file exists (always the case except if the user manually erase it)
         return False, "Selected input file was not found"
-    with open(input_file) as csv_file:
+    with codecs.open(input_file, "r", encoding="utf8") as csv_file:
         file_content = list(csv.reader(csv_file, delimiter=separator))
     if not file_content:
         return False, "Input file is empty"
@@ -109,7 +110,7 @@ def generate_output_file(title_line, data, output_file, data_prefix, predicate_p
         # we add the triplet, the attributes need to be separated by a ';' (for syntax) and a newline (for display)
         triplets.append(triplet_format.format(attributes=(";\n" + spacing_line).join(attributes)))
 
-    with open(output_file, "w") as ttl_file:
+    with codecs.open(output_file, "w", encoding="utf8") as ttl_file:
         # Adding the two prefixes, separated by a newline and an additional newline before triplets
         ttl_file.write("@prefix d: <{}> .\n".format(data_prefix))
         ttl_file.write("@prefix p: <{}> .\n\n".format(predicate_prefix))
